@@ -98,7 +98,6 @@ struct Student
     std::map<std::string, Score> RecordBook;
 };
 
-// ключ – название группы, значение – список студентов
 using Groups = std::map<std::string, std::vector<Student>>;
 
 static int scoreToInt(Score s) {

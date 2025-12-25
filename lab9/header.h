@@ -22,7 +22,7 @@ char* CopyString(const char* str)
     std::size_t len = MyStrLen(str);
     char* result = new char[len + 1];
 
-    std::memcpy(result, str, len);   // без str* функций
+    std::memcpy(result, str, len);
     result[len] = '\0';
 
     return result;
@@ -50,11 +50,8 @@ char* ConcatenateStrings(const char* a, const char* b)
 
 //задание 2
 struct Matrix {
-    // двумерный массив с данными (n * m элементов)
     int* data_ = nullptr;
-    // количество столбцов
     std::size_t n_ = 0;
-    // количество строк
     std::size_t m_ = 0;
 };
 
@@ -74,7 +71,7 @@ void Construct(Matrix& out, std::size_t n, std::size_t m)
 
     out.n_ = n;
     out.m_ = m;
-    out.data_ = new int[n * m]{0};  // заполнить нулями
+    out.data_ = new int[n * m]{0};
 }
 
 void Destruct(Matrix& in)
@@ -133,15 +130,14 @@ Matrix Mult(const Matrix& a, const Matrix& b)
     Matrix res;
     if (a.n_ == 0 || a.m_ == 0 || b.n_ == 0 || b.m_ == 0)
         return res;
-    // a: m_a x n_a, b: m_b x n_b, но по условию n_ — столбцы, m_ — строки
-    if (a.n_ != b.m_)             // число столбцов A = числу строк B
+
+    if (a.n_ != b.m_)
         return res;
 
-    // результат: матрица размером a.m_ x b.n_
-    Construct(res, b.n_, a.m_);   // n_ = столбцы, m_ = строки
+    Construct(res, b.n_, a.m_);
 
-    for (std::size_t i = 0; i < a.m_; ++i)          // по строкам A
-        for (std::size_t j = 0; j < b.n_; ++j) {    // по столбцам B
+    for (std::size_t i = 0; i < a.m_; ++i)
+        for (std::size_t j = 0; j < b.n_; ++j) {
             int sum = 0;
             for (std::size_t k = 0; k < a.n_; ++k) {
                 int valA = a.data_[Index(i, k, a.n_)];
@@ -160,7 +156,7 @@ void Transposition(Matrix& matrix)
         return;
 
     Matrix tmp;
-    Construct(tmp, matrix.m_, matrix.n_); // поменять размеры местами
+    Construct(tmp, matrix.m_, matrix.n_);
 
     for (std::size_t i = 0; i < matrix.m_; ++i)
         for (std::size_t j = 0; j < matrix.n_; ++j)
@@ -168,7 +164,7 @@ void Transposition(Matrix& matrix)
                 matrix.data_[Index(i, j, matrix.n_)];
 
     Destruct(matrix);
-    matrix = tmp;                // копирование полей (уже своя память)
+    matrix = tmp;
 }
 
 bool operator==(const Matrix& a, const Matrix& b)

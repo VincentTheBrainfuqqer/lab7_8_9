@@ -46,7 +46,6 @@ void SortByRating(std::vector<Student>& students)
                       avgB = std::accumulate(b.Ratings.begin(), b.Ratings.end(), 0.0) /
                              static_cast<double>(b.Ratings.size());
 
-                  // по убыванию средней оценки, при равенстве — по имени
                   if (avgA == avgB)
                       return a.Name < b.Name;
                   return avgA > avgB;
